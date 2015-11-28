@@ -1,9 +1,11 @@
 require 'gosu'
 require 'chipmunk'
+require_relative 'boulder'
 
 class Escape < Gosu::Window
   DAMPING = 0.90
   GRAVITY = 400.0
+  BOULDER_FREQUENCY = 0.01
   attr_reader :space
 
   def initialize
@@ -14,6 +16,7 @@ class Escape < Gosu::Window
     @background = Gosu::Image.new('images/background.png', tileable: true)
     @space.damping = DAMPING
     @space.gravity = CP::Vec2.new(0.0, GRAVITY)
+    @boulders = []
   end
 
   def update
@@ -21,6 +24,17 @@ class Escape < Gosu::Window
       10.times do
         @space.step(1.0/600)
       end
+      if rand < BOULDER_FREQUENCY
+        @boulders.push Boulder.new(self, 200+rand(400), -20)
+      end
+    end
+  end
+
+  def draw
+    @background.draw(0,0,0)
+    @background.draw(0,529,0)
+    @boulders.each do |boulder|
+      boulder.draw
     end
   end
 end

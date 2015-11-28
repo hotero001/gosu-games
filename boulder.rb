@@ -20,6 +20,6 @@ class Boulder
   end
 
   def draw
-    @image.draw_rot(@body.p.x, @body.p.y, 1, @body.angle * (180.0/MATH::PI))
+    @image.draw_rot(@body.p.x, @body.p.y, 1, @body.angle * (180.0/Math::PI))
   end
 end
